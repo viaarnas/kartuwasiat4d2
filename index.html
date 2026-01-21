@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>WASIAT4D2 | Mini Games</title>
+  <link rel="icon" type="image/png" href="https://i.postimg.cc/P5sZ8KPX/logocard.png">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
     
@@ -206,7 +207,7 @@
     }
     
     .result-card {
-      background: #0f0;
+      background: #01a332;
       width: 90%;
       max-width: 220px;
       color: red;
@@ -222,6 +223,38 @@
     
     .end{
       color: #f00;
+      padding: 10px;
+    }
+    
+    .result, .claim-prize {
+      text-align: center;
+      font-size: 24px;
+      margin: 25px;
+    }
+    
+    strong {
+      color: #ffd700;
+      font-weight: bold;
+    }
+    
+    .modal-content strong {
+      color: #000;
+      font-weight: bold;
+    }
+    
+    #home {
+      display: block;
+      margin: auto;
+      width: 60%
+    }
+    
+    a {
+      text-decoration: none;
+      color: #ffd700;
+    }
+    
+    .container #home {
+      width: 100%;
     }
   </style>
 </head>
@@ -272,6 +305,7 @@
     return `
       <div class="container">
         <h2>Apakah Kamu Sudah Memiliki Akun?</h2>
+        <button id="hadiah">List Hadiah</button>
         <button id="sudah">Sudah Punya</button>
         <button id="belum">Belum Punya</button>
       </div>
@@ -363,7 +397,7 @@
   function renderResult() {
     return `
       <div class="result" id="result">
-        Selamat! User <strong>${username}</strong> berhasil mendapatkan hadiah BONUS DEPOSIT 10% dari <strong>Kartu ${selectedCard.id.replace("card", "")}</strong>.
+        Selamat! User <strong>${username}</strong> berhasil mendapatkan hadiah <strong>${currentPrize.replace("<br>", " ")}</strong> dari <strong>Kartu ${selectedCard.id.replace("card", "")}</strong>.
       </div>
       <div class="card-wrapper">
       <div class="result-card">
@@ -383,18 +417,38 @@
   
   function renderClaimed(user, prize, card) {
     return `
-      <div>
+      <div class="result">
         Maaf, kamu sudah pernah claim dengan user <strong>${user}</strong>.<br>
-        Sebelumnya  kamu mendapat hadiah ${prize} dari Kartu ${card.replace("card", "")}.
-        <div class="card-wrapper">
-      <div class="result-card">
-        <div class="card-inner">
+        Sebelumnya  kamu mendapat hadiah <strong>${prize.replace("<br>", " ")}</strong> dari <strong>Kartu ${card.replace("card", "")}</strong>.
+      </div>
+      <div class="card-wrapper">
+        <div class="result-card">
+          <div class="card-inner">
             <div class="card-front end">
               ${prize}
             </div>
+          </div>
         </div>
       </div>
+      <div class="claim-prize">
+        Silakan <strong>Screenshot</strong> dan Claim Ke <strong><a href="https://shorthe.link/loginwasiat4d2" target="_blank" rel="noopener">Livechatt</a></strong> atau <strong><a href="https://shorthe.link/wa-wasiat4d2" target="_blank" rel="noopener">WhatsApp</a></strong> Untuk Claim Hadiahnya.
       </div>
+      <button type="button" id="home">Kembali ke Halaman Utama</button>
+    `;
+  }
+    
+  function renderHadiah() {
+    return `
+      <div class="container">
+        <h2>List Hadiah Mini Games WASIAT4D2</h2>
+        <table>
+          <tr>
+            <td>Hadiah</td>
+            <td>Keterangan</td>
+            <td>Peluang</td>
+          </tr>
+        </table>
+        <button type="button" id="home">Kembali ke Halaman Utama</button>
       </div>
     `;
   }
@@ -406,11 +460,23 @@
       const savedPrizeNow = localStorage.getItem("confirmedPrize");
       const savedCardNow = localStorage.getItem("confirmedCard");
       app.innerHTML = renderWelcome();
+      const hadiah = document.getElementById("hadiah");
       const sudah = document.getElementById("sudah");
       const belum = document.getElementById("belum");
+      hadiah.addEventListener("click", () => {
+        app.innerHTML = renderHadiah();
+        const homeBtn = document.getElementById("home");
+          homeBtn.addEventListener("click", () => {
+            render();
+          });
+      });
       sudah.addEventListener("click", () => {
         if (savedUserNow && savedPrizeNow && savedCardNow) {
           app.innerHTML = renderClaimed(savedUserNow, savedPrizeNow, savedCardNow);
+          const homeBtn = document.getElementById("home");
+          homeBtn.addEventListener("click", () => {
+            render();
+          });
         }
         else {
           stage = "inputUser";
@@ -500,7 +566,7 @@
       app.innerHTML = renderResult();
       const greets = document.querySelector("h1");
       const homeBtn = document.getElementById("home");
-      greets.innerHTML = "HADIAH";
+      greets.innerHTML = "HADIAH KAMU";
       homeBtn.addEventListener("click", () => {
         stage = "welcome";
         greets.innerHTML = "Selamat Datang Di Minigames WASIAT4D2";

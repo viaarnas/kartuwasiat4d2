@@ -227,9 +227,12 @@
     }
     
     .result, .claim-prize {
+      background: rgba(0,0,0,0.6);
       text-align: center;
       font-size: 24px;
       margin: 25px;
+      border-radius: 15px;
+      padding: 18px;
     }
     
     strong {
@@ -255,6 +258,68 @@
     
     .container #home {
       width: 100%;
+    }
+    
+    .prize-list {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 15px;
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+    
+    .prize-card {
+      background: linear-gradient(135deg, #111, #1f1f1f);
+      border-radius: 15px;
+      padding: 18px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+      border: 1px solid rgba(255,215,0,0.3);
+    }
+    
+    .prize-title {
+      font-size: 18x;
+      font-weight: 600;
+      color: #ffd700;
+      margin-bottom: 8px;
+    }
+    
+    .prize-desc {
+      font-size: 14px;
+      color: #ddd;
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+    
+    .prize-chance {
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: bold;
+      background: linear-gradient(135deg, #00ffd5, #00bfa5);
+      color: #000;
+    }
+    
+    .prize-icon {
+      font-size: 30px;
+      margin-bottom: 10px;
+    }
+    
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      top: -10px;
+      animation: confetti-fall linear forwards;
+      z-index: 9999;
+      opacity: 0.9;
+    }
+
+    @keyframes confetti-fall {
+      to {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+      }
     }
   </style>
 </head>
@@ -409,7 +474,12 @@
       </div>
       </div>
       <div class="claim-prize">
-        Silakan <strong>Screenshot</strong> dan Claim Ke <strong><a href="https://shorthe.link/loginwasiat4d2" target="_blank" rel="noopener">Livechatt</a></strong> atau <strong><a href="https://shorthe.link/wa-wasiat4d2" target="_blank" rel="noopener">WhatsApp</a></strong> Untuk Claim Hadiahnya.
+        📸 Silakan <strong>Screenshot</strong> halaman ini lalu
+        <br>
+        Claim hadiah melalui:
+        <br>
+        👉 <strong><a href="https://shorthe.link/loginwasiat4d2" target="_blank">Live Chat</a></strong><br>
+        👉 <strong><a href="https://shorthe.link/wa-wasiat4d2" target="_blank">WhatsApp</a></strong>
       </div>
       <button type="button" id="home">Kembali ke Halaman Utama</button>
     `;
@@ -431,7 +501,12 @@
         </div>
       </div>
       <div class="claim-prize">
-        Silakan <strong>Screenshot</strong> dan Claim Ke <strong><a href="https://shorthe.link/loginwasiat4d2" target="_blank" rel="noopener">Livechatt</a></strong> atau <strong><a href="https://shorthe.link/wa-wasiat4d2" target="_blank" rel="noopener">WhatsApp</a></strong> Untuk Claim Hadiahnya.
+        📸 Silakan <strong>Screenshot</strong> halaman ini lalu
+        <br>
+        Claim hadiah melalui:
+        <br>
+        👉 <strong><a href="https://shorthe.link/loginwasiat4d2" target="_blank">Live Chat</a></strong><br>
+        👉 <strong><a href="https://shorthe.link/wa-wasiat4d2" target="_blank">WhatsApp</a></strong>
       </div>
       <button type="button" id="home">Kembali ke Halaman Utama</button>
     `;
@@ -439,18 +514,64 @@
     
   function renderHadiah() {
     return `
-      <div class="container">
-        <h2>List Hadiah Mini Games WASIAT4D2</h2>
-        <table>
-          <tr>
-            <td>Hadiah</td>
-            <td>Keterangan</td>
-            <td>Peluang</td>
-          </tr>
-        </table>
+      <div class="container fade">
+        <h2>🎁 List Hadiah Mini Games WASIAT4D2</h2>
+          <div class="prize-list">
+            <div class="prize-card">
+              <div class="prize-icon">💰</div>
+              <div class="prize-title">BONUS DEPOSIT 20%</div>
+              <div class="prize-desc">
+                Dapatkan tambahan saldo <strong>20%</strong> setelah melakukan deposit.
+              </div>
+              <div class="prize-chance">Peluang: 60%</div>
+            </div>
+            <div class="prize-card">
+              <div class="prize-icon">🔥</div>
+              <div class="prize-title">BONUS NEWMEMBER 100%</div>
+              <div class="prize-desc">
+                Bonus khusus member baru dengan tambahan saldo hingga <strong>100%</strong>.
+              </div>
+              <div class="prize-chance">Peluang: 20%</div>
+            </div>
+            <div class="prize-card">
+              <div class="prize-icon">👑</div>
+              <div class="prize-title">UPGRADE VVIP WINRATE 99.9%</div>
+              <div class="prize-desc">
+                Akun langsung di-upgrade menjadi <strong>VVIP</strong> dengan peluang menang maksimal.
+              </div>
+              <div class="prize-chance">Peluang: 15%</div>
+            </div>
+            <div class="prize-card">
+              <div class="prize-icon">🎉</div>
+              <div class="prize-title">DANA KAGET 50 RIBU</div>
+              <div class="prize-desc">
+                Saldo gratis <strong>Rp50.000</strong> langsung ke rekening terdaftar.
+              </div>
+              <div class="prize-chance">Peluang: 5%</div>
+            </div>
+          </div>
         <button type="button" id="home">Kembali ke Halaman Utama</button>
       </div>
     `;
+  }
+    
+  function launchConfetti() {
+    const colors = ["#ffd700", "#00ffd5", "#ff5252", "#ffffff"];
+    const total = 80;
+  
+    for (let i = 0; i < total; i++) {
+      const confetti = document.createElement("div");
+      confetti.className = "confetti";
+      confetti.style.left = Math.random() * 100 + "vw";
+      confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+      confetti.style.animationDuration = (Math.random() * 2 + 2) + "s";
+      confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+      document.body.appendChild(confetti);
+  
+      setTimeout(() => {
+        confetti.remove();
+      }, 4000);
+    }
   }
   
   function render() {
@@ -565,6 +686,7 @@
     }
     if (stage === "result") {
       app.innerHTML = renderResult();
+      launchConfetti();
       const greets = document.querySelector("h1");
       const homeBtn = document.getElementById("home");
       greets.innerHTML = "HADIAH KAMU";

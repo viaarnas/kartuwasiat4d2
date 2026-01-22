@@ -594,6 +594,7 @@
       sudah.addEventListener("click", () => {
         if (savedUserNow && savedPrizeNow && savedCardNow) {
           app.innerHTML = renderClaimed(savedUserNow, savedPrizeNow, savedCardNow);
+          launchConfetti();
           const homeBtn = document.getElementById("home");
           homeBtn.addEventListener("click", () => {
             render();
